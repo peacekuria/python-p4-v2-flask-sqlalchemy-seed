@@ -1,13 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+# server/models.py
 
-# contains definitions of tables and associated schema constructs
-metadata = MetaData()
-
-# create the Flask SQLAlchemy extension
-db = SQLAlchemy(metadata=metadata)
-
-# define a model class by inheriting from db.Model.
+from config import db
 
 
 class Pet(db.Model):
@@ -19,3 +12,12 @@ class Pet(db.Model):
 
     def __repr__(self):
         return f'<Pet {self.id}, {self.name}, {self.species}>'
+
+    def to_dict(self):
+        """Convert Pet instance to dictionary for JSON serialization."""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'species': self.species
+        }
+
